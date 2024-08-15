@@ -3,10 +3,9 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
-use App\Http\Resources\PriorityResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class TaskResource extends JsonResource
+class PriorityResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,9 +16,7 @@ class TaskResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'content' => $this->content,
-            'is_completed' => (bool) $this->is_completed,
-            'priority' => PriorityResource::make($this->whenLoaded('priority')),
+            'name' => $this->name,
         ];
     }
 }

@@ -14,7 +14,7 @@ class TasksController extends Controller
      */
     public function index()
     {
-        return TaskResource::collection(Task::all());
+        return TaskResource::collection(Task::all()->load('priority'));
     }
 
     /**
@@ -24,9 +24,12 @@ class TasksController extends Controller
     {
         $validate = $request->validate([
             'content' => 'required|string|min:3|max:255',
+            'priority_id' => 'nullable|exists:priorities,id'
         ]);
 
         $task = Task::create($validate);
+
+        $task->load('priority');
 
         return TaskResource::make($task);
     }
@@ -37,6 +40,8 @@ class TasksController extends Controller
     public function show(string $id)
     {
         $task = Task::findOrFail($id);
+
+        $task->load('priority');
 
         return TaskResource::make($task);
     }
@@ -57,9 +62,11 @@ class TasksController extends Controller
 
         $validate = $request->validate([
             'content' => 'required|string|min:3|max:255',
+            'priority_id' => 'nullable|exists:priorities,id'
         ]);
         
         $task->update($validate);
+        $task->load('priority');
 
         return TaskResource::make($task);
     }

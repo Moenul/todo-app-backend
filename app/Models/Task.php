@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Priority;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Task extends Model
 {
@@ -12,5 +13,11 @@ class Task extends Model
     protected $fillable = [
         'content',
         'is_completed',
+        'priority_id',
     ];
+
+    public function priority()
+    {
+        return $this->belongsTo(Priority::class);
+    }
 }
