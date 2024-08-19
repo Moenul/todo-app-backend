@@ -14,7 +14,7 @@ class TasksController extends Controller
      */
     public function index()
     {
-        return TaskResource::collection(Task::all()->load('priority'));
+        return TaskResource::collection(Task::orderBy('id', 'desc')->get()->load('priority'));
     }
 
     /**
@@ -62,6 +62,7 @@ class TasksController extends Controller
 
         $validate = $request->validate([
             'content' => 'required|string|min:3|max:255',
+            'is_completed' => 'boolean',
             'priority_id' => 'nullable|exists:priorities,id'
         ]);
         
@@ -80,5 +81,10 @@ class TasksController extends Controller
         $task->delete();
 
         return response()->noContent();
+    }
+
+    public function truncate()
+    {
+        Task::truncate();
     }
 }

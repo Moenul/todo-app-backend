@@ -19,6 +19,7 @@ class TaskResource extends JsonResource
             'id' => $this->id,
             'content' => $this->content,
             'is_completed' => (bool) $this->is_completed,
+            'created_at' => $this->created_at->timestamp * 1000,
             'priority' => PriorityResource::make($this->whenLoaded('priority')),
         ];
     }
