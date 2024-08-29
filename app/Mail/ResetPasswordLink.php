@@ -3,11 +3,12 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
 class ResetPasswordLink extends Mailable
 {
@@ -16,9 +17,10 @@ class ResetPasswordLink extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct($url)
+    public function __construct($email)
     {
-        $this->url = $url;
+        $generate = URL::temporarySignedRoute('password.reset', now()->addMinute(30), ["email"=>$email]);
+        $this->url = str_replace(env('APP_URL'), env('FRONTEND_URL'), $generate);
     }
 
     /**
