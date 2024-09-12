@@ -20,7 +20,8 @@ class ResetPasswordLink extends Mailable
     public function __construct($email)
     {
         $generate = URL::temporarySignedRoute('password.reset', now()->addMinute(30), ["email"=>$email]);
-        $this->url = str_replace(env('APP_URL'), env('FRONTEND_URL'), $generate);
+        $front_end_url_withHashed = env('FRONTEND_URL') . '#';
+        $this->url = str_replace(env('APP_URL'), $front_end_url_withHashed, $generate);
     }
 
     /**
