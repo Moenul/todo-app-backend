@@ -21,7 +21,9 @@ class DatabaseSeeder extends Seeder
             'email' => 'moenul22@gmail.com',
         ]);
 
-        Task::factory(10)->create();
+        Task::factory(10)->create([
+            'user_id' => 1
+        ]);
 
     }
 }

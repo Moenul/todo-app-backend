@@ -17,6 +17,7 @@ class TaskResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'user_id' => $this->user_id,
             'content' => $this->content,
             'is_completed' => (bool) $this->is_completed,
             'created_at' => $this->created_at->timestamp * 1000,
